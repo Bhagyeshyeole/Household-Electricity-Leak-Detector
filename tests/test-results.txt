@@ -1,0 +1,19 @@
+HOUSEHOLD ELECTRICITY LEAK DETECTOR
+TEST RESULTS
+
+Test 1: Program starts - PASS
+Test 2: Add valid appliance - PASS
+Test 3: View appliances - PASS
+Test 4: CSV persistence - PASS
+Test 5: Calculate bill - PASS
+Test 6: Consumption analysis - PASS
+Test 7: Savings calculation - PASS
+Test 8: Invalid menu choice - PASS
+Test 9: Empty appliance name - PASS
+Test 10: Negative wattage - PASS
+Test 11: Invalid usage hours - PASS
+Test 12: Text instead of number - PASS
+Test 13: Empty appliance list - PASS
+Test 14: Exit program - PASS
+
+Overall Result: PASS
