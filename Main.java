@@ -24,7 +24,9 @@ public class Main {
 
         FileManager fileManager = new FileManager();
 
-        // Load previously saved appliances
+        InputValidator validator = new InputValidator();
+
+        // Load saved appliances
         manager.loadData(fileManager);
 
         // Electricity rate
@@ -49,6 +51,13 @@ public class Main {
             System.out.print("Enter your choice: ");
             choice = sc.nextInt();
 
+            // Validate menu choice
+            if (!validator.isValidMenuChoice(choice)) {
+                System.out.println(
+                        "Invalid choice. Please select 1 to 6.");
+                continue;
+            }
+
             // Add appliance
             if (choice == 1) {
 
@@ -57,19 +66,40 @@ public class Main {
                 System.out.print("Enter appliance name: ");
                 String name = sc.nextLine();
 
+                // Validate name
+                if (!validator.isValidName(name)) {
+                    System.out.println(
+                            "Invalid name. Name cannot be empty.");
+                    continue;
+                }
+
                 System.out.print("Enter wattage (W): ");
                 double wattage = sc.nextDouble();
+
+                // Validate wattage
+                if (!validator.isValidWattage(wattage)) {
+                    System.out.println(
+                            "Invalid wattage. Enter a value greater than 0.");
+                    continue;
+                }
 
                 System.out.print("Enter usage hours per day: ");
                 double hoursPerDay = sc.nextDouble();
 
+                // Validate usage hours
+                if (!validator.isValidHours(hoursPerDay)) {
+                    System.out.println(
+                            "Invalid hours. Enter a value between 0 and 24.");
+                    continue;
+                }
+
                 Appliance appliance =
                         new Appliance(name, wattage, hoursPerDay);
 
-                // Add appliance to manager
+                // Add appliance
                 manager.addAppliance(appliance);
 
-                // Save updated list to CSV
+                // Save appliance
                 manager.saveData(fileManager);
 
                 System.out.println(
@@ -108,6 +138,13 @@ public class Main {
                                                 dailyConsumption);
 
                         totalMonthlyConsumption += monthlyConsumption;
+                    }
+
+                    // Validate electricity rate
+                    if (!validator.isValidRate(electricityRate)) {
+                        System.out.println(
+                                "Invalid electricity rate.");
+                        continue;
                     }
 
                     double totalBill =
@@ -162,13 +199,34 @@ public class Main {
                             "Enter current appliance wattage (W): ");
                     double currentWattage = sc.nextDouble();
 
+                    // Validate current wattage
+                    if (!validator.isValidWattage(currentWattage)) {
+                        System.out.println(
+                                "Invalid wattage. Enter a value greater than 0.");
+                        continue;
+                    }
+
                     System.out.print(
                             "Enter replacement appliance wattage (W): ");
                     double newWattage = sc.nextDouble();
 
+                    // Validate replacement wattage
+                    if (!validator.isValidWattage(newWattage)) {
+                        System.out.println(
+                                "Invalid replacement wattage.");
+                        continue;
+                    }
+
                     System.out.print(
                             "Enter usage hours per day: ");
                     double hoursPerDay = sc.nextDouble();
+
+                    // Validate usage hours
+                    if (!validator.isValidHours(hoursPerDay)) {
+                        System.out.println(
+                                "Invalid hours. Enter a value between 0 and 24.");
+                        continue;
+                    }
 
                     double currentConsumption =
                             savingsCalculator
@@ -228,13 +286,6 @@ public class Main {
 
                 System.out.println(
                         "Thank you for using Household Electricity Leak Detector.");
-            }
-
-            // Invalid menu choice
-            else {
-
-                System.out.println(
-                        "Invalid choice. Please select 1 to 6.");
             }
         }
 
