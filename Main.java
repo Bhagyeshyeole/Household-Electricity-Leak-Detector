@@ -48,51 +48,102 @@ public class Main {
             System.out.println("6. Exit");
             System.out.println("========================================");
 
-            System.out.print("Enter your choice: ");
-            choice = sc.nextInt();
+            // Read menu choice safely
+            while (true) {
 
-            // Validate menu choice
-            if (!validator.isValidMenuChoice(choice)) {
-                System.out.println(
-                        "Invalid choice. Please select 1 to 6.");
-                continue;
+                System.out.print("Enter your choice: ");
+
+                try {
+
+                    choice = Integer.parseInt(sc.nextLine());
+
+                    if (!validator.isValidMenuChoice(choice)) {
+                        System.out.println(
+                                "Invalid choice. Please select 1 to 6.");
+                        continue;
+                    }
+
+                    break;
+
+                } catch (NumberFormatException e) {
+
+                    System.out.println(
+                            "Invalid input. Please enter a number.");
+                }
             }
 
             // Add appliance
             if (choice == 1) {
 
-                sc.nextLine();
+                String name;
 
-                System.out.print("Enter appliance name: ");
-                String name = sc.nextLine();
+                // Read appliance name
+                while (true) {
 
-                // Validate name
-                if (!validator.isValidName(name)) {
+                    System.out.print("Enter appliance name: ");
+                    name = sc.nextLine();
+
+                    if (validator.isValidName(name)) {
+                        break;
+                    }
+
                     System.out.println(
                             "Invalid name. Name cannot be empty.");
-                    continue;
                 }
 
-                System.out.print("Enter wattage (W): ");
-                double wattage = sc.nextDouble();
+                double wattage;
 
-                // Validate wattage
-                if (!validator.isValidWattage(wattage)) {
-                    System.out.println(
-                            "Invalid wattage. Enter a value greater than 0.");
-                    continue;
+                // Read wattage safely
+                while (true) {
+
+                    System.out.print("Enter wattage (W): ");
+
+                    try {
+
+                        wattage = Double.parseDouble(sc.nextLine());
+
+                        if (validator.isValidWattage(wattage)) {
+                            break;
+                        }
+
+                        System.out.println(
+                                "Invalid wattage. Enter a value greater than 0.");
+
+                    } catch (NumberFormatException e) {
+
+                        System.out.println(
+                                "Invalid input. Please enter a number.");
+                    }
                 }
 
-                System.out.print("Enter usage hours per day: ");
-                double hoursPerDay = sc.nextDouble();
+                double hoursPerDay;
 
-                // Validate usage hours
-                if (!validator.isValidHours(hoursPerDay)) {
-                    System.out.println(
-                            "Invalid hours. Enter a value between 0 and 24.");
-                    continue;
+                // Read usage hours safely
+                while (true) {
+
+                    System.out.print(
+                            "Enter usage hours per day: ");
+
+                    try {
+
+                        hoursPerDay =
+                                Double.parseDouble(sc.nextLine());
+
+                        if (validator.isValidHours(hoursPerDay)) {
+                            break;
+                        }
+
+                        System.out.println(
+                                "Invalid hours. Enter a value between 0 and 24.");
+
+                    } catch (NumberFormatException e) {
+
+                        System.out.println(
+                                "Invalid input. Please enter a number.");
+                    }
                 }
 
+                // Create appliance
                 Appliance appliance =
                         new Appliance(name, wattage, hoursPerDay);
 
@@ -117,7 +168,8 @@ public class Main {
 
                 if (manager.getApplianceCount() == 0) {
 
-                    System.out.println("No appliances available.");
+                    System.out.println(
+                            "No appliances available.");
 
                 } else {
 
@@ -137,14 +189,8 @@ public class Main {
                                         .calculateMonthlyConsumption(
                                                 dailyConsumption);
 
-                        totalMonthlyConsumption += monthlyConsumption;
-                    }
-
-                    // Validate electricity rate
-                    if (!validator.isValidRate(electricityRate)) {
-                        System.out.println(
-                                "Invalid electricity rate.");
-                        continue;
+                        totalMonthlyConsumption +=
+                                monthlyConsumption;
                     }
 
                     double totalBill =
@@ -171,7 +217,8 @@ public class Main {
 
                 if (manager.getApplianceCount() == 0) {
 
-                    System.out.println("No appliances available.");
+                    System.out.println(
+                            "No appliances available.");
 
                 } else {
 
@@ -191,66 +238,125 @@ public class Main {
 
                 if (manager.getApplianceCount() == 0) {
 
-                    System.out.println("No appliances available.");
+                    System.out.println(
+                            "No appliances available.");
 
                 } else {
 
-                    System.out.print(
-                            "Enter current appliance wattage (W): ");
-                    double currentWattage = sc.nextDouble();
+                    double currentWattage;
 
-                    // Validate current wattage
-                    if (!validator.isValidWattage(currentWattage)) {
-                        System.out.println(
-                                "Invalid wattage. Enter a value greater than 0.");
-                        continue;
+                    // Read current wattage safely
+                    while (true) {
+
+                        System.out.print(
+                                "Enter current appliance wattage (W): ");
+
+                        try {
+
+                            currentWattage =
+                                    Double.parseDouble(
+                                            sc.nextLine());
+
+                            if (validator.isValidWattage(
+                                    currentWattage)) {
+                                break;
+                            }
+
+                            System.out.println(
+                                    "Invalid wattage. Enter a value greater than 0.");
+
+                        } catch (NumberFormatException e) {
+
+                            System.out.println(
+                                    "Invalid input. Please enter a number.");
+                        }
                     }
 
-                    System.out.print(
-                            "Enter replacement appliance wattage (W): ");
-                    double newWattage = sc.nextDouble();
+                    double newWattage;
 
-                    // Validate replacement wattage
-                    if (!validator.isValidWattage(newWattage)) {
-                        System.out.println(
-                                "Invalid replacement wattage.");
-                        continue;
+                    // Read replacement wattage safely
+                    while (true) {
+
+                        System.out.print(
+                                "Enter replacement appliance wattage (W): ");
+
+                        try {
+
+                            newWattage =
+                                    Double.parseDouble(
+                                            sc.nextLine());
+
+                            if (validator.isValidWattage(newWattage)) {
+                                break;
+                            }
+
+                            System.out.println(
+                                    "Invalid replacement wattage.");
+
+                        } catch (NumberFormatException e) {
+
+                            System.out.println(
+                                    "Invalid input. Please enter a number.");
+                        }
                     }
 
-                    System.out.print(
-                            "Enter usage hours per day: ");
-                    double hoursPerDay = sc.nextDouble();
+                    double hoursPerDay;
 
-                    // Validate usage hours
-                    if (!validator.isValidHours(hoursPerDay)) {
-                        System.out.println(
-                                "Invalid hours. Enter a value between 0 and 24.");
-                        continue;
+                    // Read usage hours safely
+                    while (true) {
+
+                        System.out.print(
+                                "Enter usage hours per day: ");
+
+                        try {
+
+                            hoursPerDay =
+                                    Double.parseDouble(
+                                            sc.nextLine());
+
+                            if (validator.isValidHours(hoursPerDay)) {
+                                break;
+                            }
+
+                            System.out.println(
+                                    "Invalid hours. Enter a value between 0 and 24.");
+
+                        } catch (NumberFormatException e) {
+
+                            System.out.println(
+                                    "Invalid input. Please enter a number.");
+                        }
                     }
 
+                    // Calculate current consumption
                     double currentConsumption =
                             savingsCalculator
                                     .calculateMonthlyConsumption(
                                             currentWattage,
                                             hoursPerDay);
 
+                    // Calculate new consumption
                     double newConsumption =
                             savingsCalculator
                                     .calculateMonthlyConsumption(
                                             newWattage,
                                             hoursPerDay);
 
+                    // Calculate energy saving
                     double energySaving =
-                            savingsCalculator.calculateMonthlySaving(
-                                    currentConsumption,
-                                    newConsumption);
+                            savingsCalculator
+                                    .calculateMonthlySaving(
+                                            currentConsumption,
+                                            newConsumption);
 
+                    // Calculate monthly money saving
                     double monthlyMoneySaving =
                             savingsCalculator
                                     .calculateMonthlyMoneySaving(
                                             energySaving,
                                             electricityRate);
 
+                    // Calculate annual money saving
                     double annualMoneySaving =
                             savingsCalculator
                                     .calculateAnnualMoneySaving(
