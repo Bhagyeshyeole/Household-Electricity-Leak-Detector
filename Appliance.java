@@ -1,4 +1,3 @@
-
 public class Appliance {
 
     // Store appliance name
@@ -7,10 +6,10 @@ public class Appliance {
     // Store appliance wattage
     double wattage;
 
-    // Store daily usage hours
+    // Store usage hours per day
     double hoursPerDay;
 
-    // Constructor to create an appliance
+    // Constructor creates an appliance
     Appliance(String name, double wattage, double hoursPerDay) {
         this.name = name;
         this.wattage = wattage;

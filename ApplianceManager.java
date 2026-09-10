@@ -13,7 +13,7 @@ public class ApplianceManager {
     // Display all appliances
     void displayAllAppliances() {
 
-        System.out.println("----------- APPLIANCE LIST -----------");
+        System.out.println("\n----------- APPLIANCE LIST -----------");
 
         // Check if there are no appliances
         if (appliances.isEmpty()) {
@@ -21,10 +21,12 @@ public class ApplianceManager {
             return;
         }
 
-        // Display each appliance
-        for (Appliance appliance : appliances) {
-            appliance.displayDetails();
-            System.out.println();
+        // Display each appliance with a number
+        for (int i = 0; i < appliances.size(); i++) {
+
+            System.out.println("\nAppliance " + (i + 1));
+
+            appliances.get(i).displayDetails();
         }
     }
 
