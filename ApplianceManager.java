@@ -15,13 +15,13 @@ public class ApplianceManager {
 
         System.out.println("\n----------- APPLIANCE LIST -----------");
 
-        // Check if there are no appliances
+        // Check if the list is empty
         if (appliances.isEmpty()) {
             System.out.println("No appliances added.");
             return;
         }
 
-        // Display each appliance with a number
+        // Display each appliance
         for (int i = 0; i < appliances.size(); i++) {
 
             System.out.println("\nAppliance " + (i + 1));
@@ -38,5 +38,15 @@ public class ApplianceManager {
     // Return the appliance list
     ArrayList<Appliance> getAppliances() {
         return appliances;
+    }
+
+    // Save appliances to CSV
+    void saveData(FileManager fileManager) {
+        fileManager.saveAppliances(appliances);
+    }
+
+    // Load appliances from CSV
+    void loadData(FileManager fileManager) {
+        appliances = fileManager.loadAppliances();
     }
 }

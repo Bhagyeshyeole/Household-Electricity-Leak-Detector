@@ -9,21 +9,30 @@ public class Main {
 
         // Create project objects
         ApplianceManager manager = new ApplianceManager();
+
         ElectricityCalculator electricityCalculator =
                 new ElectricityCalculator();
+
         BillCalculator billCalculator =
                 new BillCalculator();
+
         ConsumptionAnalyzer analyzer =
                 new ConsumptionAnalyzer();
+
         SavingsCalculator savingsCalculator =
                 new SavingsCalculator();
 
-        // Store electricity rate
+        FileManager fileManager = new FileManager();
+
+        // Load previously saved appliances
+        manager.loadData(fileManager);
+
+        // Electricity rate
         double electricityRate = 7;
 
         int choice = 0;
 
-        // Keep showing menu until user chooses Exit
+        // Keep showing menu until Exit
         while (choice != 6) {
 
             System.out.println("\n========================================");
@@ -57,9 +66,14 @@ public class Main {
                 Appliance appliance =
                         new Appliance(name, wattage, hoursPerDay);
 
+                // Add appliance to manager
                 manager.addAppliance(appliance);
 
-                System.out.println("Appliance added successfully.");
+                // Save updated list to CSV
+                manager.saveData(fileManager);
+
+                System.out.println(
+                        "Appliance added and saved successfully.");
             }
 
             // View appliances
@@ -216,7 +230,7 @@ public class Main {
                         "Thank you for using Household Electricity Leak Detector.");
             }
 
-            // Invalid choice
+            // Invalid menu choice
             else {
 
                 System.out.println(
