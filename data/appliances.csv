@@ -1,3 +1,5 @@
 name,wattage,hoursPerDay
 fan,75.0,8.0
 led bulb,10.0,6.0
+fan,200.0,3.0
+TV,120.0,7.0

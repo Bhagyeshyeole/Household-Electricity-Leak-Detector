@@ -10,7 +10,7 @@ public class FileManager {
     // Location of the CSV file
     private static final String FILE_NAME = "data/appliances.csv";
 
-    // Save all appliances to the CSV file
+    // Save all appliances to CSV
     public void saveAppliances(ArrayList<Appliance> appliances) {
 
         try (PrintWriter writer = new PrintWriter(
@@ -21,6 +21,7 @@ public class FileManager {
 
             // Write each appliance
             for (Appliance appliance : appliances) {
+
                 writer.println(
                         appliance.name + ","
                         + appliance.wattage + ","
@@ -33,7 +34,7 @@ public class FileManager {
         }
     }
 
-    // Load appliances from the CSV file
+    // Load appliances from CSV
     public ArrayList<Appliance> loadAppliances() {
 
         ArrayList<Appliance> appliances = new ArrayList<>();
@@ -41,29 +42,56 @@ public class FileManager {
         try (BufferedReader reader =
                      new BufferedReader(new FileReader(FILE_NAME))) {
 
-            // Skip CSV header
-            reader.readLine();
+            // Read and skip the header
+            String line = reader.readLine();
 
-            String line;
-
-            // Read each row
+            // Read remaining lines
             while ((line = reader.readLine()) != null) {
 
+                // Ignore empty lines
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                // Split the CSV line
                 String[] data = line.split(",");
 
-                String name = data[0];
-                double wattage = Double.parseDouble(data[1]);
-                double hoursPerDay = Double.parseDouble(data[2]);
+                // Check that the row has all 3 values
+                if (data.length != 3) {
+                    System.out.println(
+                            "Skipping invalid CSV row: " + line);
+                    continue;
+                }
 
-                Appliance appliance =
-                        new Appliance(name, wattage, hoursPerDay);
+                try {
 
-                appliances.add(appliance);
+                    String name = data[0].trim();
+                    double wattage =
+                            Double.parseDouble(data[1].trim());
+                    double hoursPerDay =
+                            Double.parseDouble(data[2].trim());
+
+                    // Create appliance object
+                    Appliance appliance =
+                            new Appliance(
+                                    name,
+                                    wattage,
+                                    hoursPerDay);
+
+                    // Add appliance to list
+                    appliances.add(appliance);
+
+                } catch (NumberFormatException e) {
+
+                    // Skip rows with invalid numbers
+                    System.out.println(
+                            "Skipping invalid CSV data: " + line);
+                }
             }
 
         } catch (IOException e) {
 
-            // File may not exist on first run
+            // File does not exist yet
         }
 
         return appliances;
